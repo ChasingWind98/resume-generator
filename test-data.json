@@ -1,0 +1,56 @@
+{
+  "personalInfo": {
+    "name": "Lena Meyer",
+    "titel": "Softwareentwicklerin | Cloud & DevOps",
+    "telefon": "+49 176 12345678",
+    "email": "lena.meyer@email.de",
+    "adresse": "Beispielstraße 10, 85072 Eichstätt",
+    "ueberMichText": "Motivierte und technologiebegeisterte Softwareentwicklerin mit Fokus auf Cloud-native Anwendungen. Ich brenne dafür, sauberen, effizienten Code zu schreiben und komplexe Probleme in verteilten Systemen zu lösen."
+  },
+  "photoPath": "",
+  "skills": [
+    "Java, Quarkus, Spring Boot",
+    "Docker & Kubernetes",
+    "CI/CD (GitHub Actions)",
+    "PostgreSQL, REST APIs",
+    "Cloud (AWS, Azure)",
+    "Test-Driven Development"
+  ],
+  "educationEntries": [
+    {
+      "titel": "Master of Science: Informatik",
+      "universitaet": "Technische Universität München (TUM)",
+      "zeitraum": "10/2023 - 07/2025",
+      "beschreibung": "Schwerpunkt: Cloud Computing und verteilte Systeme."
+    },
+    {
+      "titel": "Bachelor of Science: Wirtschaftsinformatik",
+      "universitaet": "Katholische Universität Eichstätt-Ingolstadt",
+      "zeitraum": "10/2020 - 09/2023",
+      "beschreibung": "Abschlussarbeit: \"Analyse von Microservice-Architekturen\". Note: 1,3."
+    }
+  ],
+  "experienceEntries": [
+    {
+      "titel": "Werkstudentin Softwareentwicklung",
+      "firma": "Siemens AG, München",
+      "zeitraum": "03/2024 - Heute",
+      "beschreibung": [
+        "Entwicklung und Wartung von Java-Microservices in einer Cloud-Umgebung.",
+        "Mitarbeit bei der Erstellung von CI/CD-Pipelines zur Automatisierung von Deployments."
+      ]
+    }
+  ],
+  "projectExperienceEntries": [
+    {
+      "projektTitel": "Cloud-nativer Lebenslauf-Generator",
+      "zeitraum": "09/2025 - Heute",
+      "technologien": "Quarkus, Java 17, Docker, Kubernetes, LaTeX, GitHub Actions",
+      "link": "https://github.com/IhrName/lebenslauf-generator",
+      "beschreibung": [
+        "Entwicklung eines RESTful-Microservices zur dynamischen Erzeugung von PDF-Lebensläufen aus JSON-Daten.",
+        "Implementierung einer automatisierten CI/CD-Pipeline für Build, Test und Deployment."
+      ]
+    }
+  ]
+}

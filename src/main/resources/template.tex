@@ -1,0 +1,124 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Professionelle Lebenslauf-Vorlage (Deutsch) - FINALE VERSION
+%
+% Inklusive aller besprochenen Anpassungen und typografischen Verbesserungen.
+%
+% WICHTIG: Dieses Dokument muss mit XeLaTeX oder LuaLaTeX kompiliert werden.
+% BENÖTIGTE TeX-Pakete: lato, fontawesome5, tikz, pgf, babel-german,
+%                         hyperref, enumitem, microtype
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10pt]{article}
+
+% --- GRUNDEINSTELLUNGEN ---
+\usepackage[ngerman]{babel}
+\usepackage{fontspec} % Erlaubt die Nutzung von System-Schriftarten
+\usepackage{microtype} % Verbessert den Text-Satz und Umbruch
+\usepackage{geometry} % Für Seitenränder
+\usepackage{graphicx} % Für Bilder
+\usepackage[svgnames]{xcolor} % Für Farben
+\usepackage{tikz}     % Für komplexe Grafiken (hier: rundes Bild)
+\usepackage{fontawesome5} % Für Icons (Telefon, E-Mail etc.)
+\usepackage{enumitem} % Zum Anpassen von Listen
+\usepackage{hyperref} % Macht Links im PDF klickbar
+
+% --- SEITENLAYOUT & LINKS ---
+\geometry{left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm} % Enge Ränder
+\pagestyle{empty} % Keine Seitenzahlen
+\setlength{\parindent}{0pt} % Keine Absatzeinrückung
+\hypersetup{colorlinks=true, urlcolor=primarycolor, linkcolor=primarycolor} % Style für klickbare Links
+
+% --- SCHRIFTART & FARBEN ---
+\setsansfont{Lato} % Eine saubere, moderne Schriftart
+\renewcommand{\familydefault}{\sfdefault} % Sans-serif als Standard
+\definecolor{primarycolor}{HTML}{5B9BD5} % Das Blau aus der Vorlage
+\definecolor{graytext}{HTML}{595959}
+\definecolor{lightgray}{HTML}{D9D9D9}
+
+% --- PLATZHALTER-BEFEHL ---
+\newcommand{\VAR}[1]{\texttt{#1}}
+
+% --- HELFER-BEFEHLE FÜR DAS DESIGN ---
+\newcommand{\sectiontitle}[1]{%
+  {\Large\color{primarycolor}\textbf{#1}}\\[2mm]
+  \textcolor{lightgray}{\rule{\linewidth}{1pt}}\\[4mm]
+}
+\newcommand{\skill}[1]{\item \textcolor{graytext}{#1}}
+\setlist[itemize]{leftmargin=*, noitemsep, topsep=2pt, partopsep=0pt, parsep=2pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --- BEGINN DES DOKUMENTS ---
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% --- KOPFZEILE: NAME UND TITEL ---
+\begin{center}
+    {\Huge\color{primarycolor}\textbf{\VAR{name}}}\\[2mm]
+    {\large\color{graytext}\VAR{titel}}
+\end{center}
+\vspace{8mm}
+
+% --- HAUPTBEREICH: ZWEISPALTIGES LAYOUT ---
+\begin{minipage}[t]{0.32\textwidth} % Linke, schmalere Spalte
+    \raggedright % VERBESSERUNG: Linksbündiger Flattersatz für bessere Lesbarkeit in schmalen Spalten
+
+    % --- PROFILBILD (RUND) ---
+    \begin{center}
+        \begin{tikzpicture}
+            \clip (0,0) circle (1.7cm);
+            % HINWEIS FÜR JAVA: Ersetzen Sie \VAR{photo_path} mit dem Pfad zu der vom User hochgeladenen Bilddatei.
+            \node {\includegraphics[width=3.4cm]{\VAR{photo_path}}};
+        \end{tikzpicture}
+    \end{center}
+    \vspace{8mm}
+
+    % --- KONTAKT ---
+    \sectiontitle{Kontakt}
+    \begin{tabular}{@{}p{1cm}p{6cm}}
+        \faPhone & \textcolor{graytext}{\VAR{telefon}} \\
+        \faEnvelope & \textcolor{graytext}{\VAR{email}} \\
+        \faMapMarker & \textcolor{graytext}{\VAR{adresse}} \\
+    \end{tabular}
+    \vspace{8mm}
+
+    % --- ÜBER MICH ---
+    \sectiontitle{Über mich}
+    \textcolor{graytext}{\VAR{ueber_mich_text}}
+    \vspace{8mm}
+
+    % --- KENNTNISSE ---
+    \sectiontitle{Kenntnisse}
+    \begin{itemize}
+        % HINWEIS FÜR JAVA: Iterieren Sie durch die Liste der Skills aus dem JSON.
+        % Erzeugen Sie für jeden Skill eine Zeile im Format "\skill{Skill-Name}"
+        % und ersetzen Sie den gesamten Platzhalter \VAR{kenntnisse_block}
+        % mit dem Ergebnis-String.
+        \VAR{kenntnisse_block}
+    \end{itemize}
+
+\end{minipage}
+\hspace{0.04\textwidth} % Abstand zwischen den Spalten
+\begin{minipage}[t]{0.64\textwidth} % Rechte, breitere Spalte
+
+    % --- AUSBILDUNG ---
+    \sectiontitle{Ausbildung}
+    % HINWEIS FÜR JAVA: Iterieren Sie durch die Ausbildungs-Liste im JSON.
+    % Bauen Sie für jeden Eintrag einen Block und ersetzen Sie den Platzhalter.
+    \VAR{ausbildung_block}
+
+    % --- BERUFSERFAHRUNG ---
+    \sectiontitle{Berufserfahrung}
+    % HINWEIS FÜR JAVA: Iterieren Sie durch die Berufserfahrungs-Liste im JSON.
+    % Bauen Sie für jeden Eintrag einen Block und ersetzen Sie den Platzhalter.
+    \VAR{berufserfahrung_block}
+
+    % --- PROJEKTERFAHRUNG ---
+    \sectiontitle{Projekterfahrung}
+    % HINWEIS FÜR JAVA: Iterieren Sie durch die Projekt-Liste im JSON.
+    % Bauen Sie für jeden Eintrag einen Block (inkl. \href-Befehl für Links)
+    % und ersetzen Sie diesen Platzhalter.
+    \VAR{projekterfahrung_block}
+
+\end{minipage}
+
+\end{document}
