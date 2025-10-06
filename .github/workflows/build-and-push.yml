@@ -1,13 +1,21 @@
-# .github/workflows/build-and-push.yml
-name: Build and Push Docker Image
+name: Build and Push to AWS ECR
 
 on:
   push:
-    branches: [ "main" ] # Führt den Job bei jedem Push auf den main-Branch aus
+    branches: [ "main" ]
+
+env:
+  # Umgebungsvariable für den ECR Registry URI
+  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
 jobs:
-  build:
-    runs-on: ubuntu-latest # Der Job läuft auf einem von GitHub bereitgestellten Linux-Server
+  build-and-push:
+    runs-on: ubuntu-latest
+    # WICHTIG: Diese Berechtigungen sind für die sichere OIDC-Anmeldung erforderlich
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,16 +27,24 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        # Dieser Befehl kompiliert, testet und baut die Anwendung
-        run: ./mvnw package
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+      - name: Configure AWS Credentials
+        # Diese Action tauscht ein GitHub Token gegen temporäre AWS-Credentials aus
+        uses: aws-actions/configure-aws-credentials@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Build and push Docker image
-        # Dieser Quarkus-Befehl baut das Docker-Image und pusht es zu Docker Hub
-        run: ./mvnw package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.group=${{ secrets.DOCKER_USERNAME }}
+      - name: Login to Amazon ECR
+        # Meldet den Docker-Client bei ECR an
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        run: |
+          # Wir bauen das Image jetzt mit Maven, aber pushen es nicht automatisch
+          ./mvnw package -Dquarkus.container-image.build=true -Dquarkus.container-image.group=${{ env.ECR_REGISTRY }}
+          
+          # Der Image-Name wird aus der application.properties genommen
+          IMAGE_NAME=$(./mvnw help:evaluate -Dexpression=quarkus.container-image.name -q -DforceStdout)
+          
+          # Pushen des Images mit dem "latest" Tag
+          docker push ${{ env.ECR_REGISTRY }}/${IMAGE_NAME}:latest
