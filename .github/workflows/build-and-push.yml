@@ -38,13 +38,5 @@ jobs:
         # Meldet den Docker-Client bei ECR an
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
-        run: |
-          # Wir bauen das Image jetzt mit Maven, aber pushen es nicht automatisch
-          ./mvnw package -Dquarkus.container-image.build=true -Dquarkus.container-image.group=${{ env.ECR_REGISTRY }}
-          
-          # Der Image-Name wird aus der application.properties genommen
-          IMAGE_NAME=$(./mvnw help:evaluate -Dexpression=quarkus.container-image.name -q -DforceStdout)
-          
-          # Pushen des Images mit dem "latest" Tag
-          docker push ${{ env.ECR_REGISTRY }}/${IMAGE_NAME}:latest
+      - name: Build and push image to Amazon ECR
+        run: ./mvnw package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.group=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
