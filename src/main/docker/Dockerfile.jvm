@@ -80,18 +80,13 @@
 ###
 FROM registry.access.redhat.com/ubi9/openjdk-21:1.23
 
-# ------------------------- HINZUGEFÜGTER BLOCK START -------------------------
-# Installieren Sie notwendige Werkzeuge und eine minimale TeX Live Distribution.
-# Der Paketmanager in ubi9 ist microdnf.
-# Wir müssen vor der Installation von TeX Live erst sicherstellen, dass das System aktuell ist.
-RUN microdnf update -y && \
-    microdnf install -y \
+RUN microdnf install -y \
     texlive-scheme-basic \
     texlive-xetex \
     texlive-lato \
     texlive-fontawesome5 \
     texlive-tikz \
-    texlive-hyphen-german \
+    texlive-collection-langgerman \
  && microdnf clean all
 # ------------------------- HINZUGEFÜGTER BLOCK ENDE --------------------------
 
