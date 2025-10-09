@@ -21,13 +21,9 @@
  % --- LADE DIE GEBÜNDELTE SCHRIFTART PER DATEINAME ---
  % Dies ist der entscheidende Teil. Wir sagen fontspec, wo genau die Dateien liegen.
 % --- ALLERLETZTER VERSUCH: Pfad direkt in die Dateinamen integrieren ---
-\setsansfont{Source Sans}[
-    Extension = .ttf,
-    UprightFont = fonts/SourceSans3-Regular,
-    BoldFont = fonts/SourceSans3-Bold,
-    ItalicFont = fonts/SourceSans3-Italic
-]
- \renewcommand{\familydefault}{\sfdefault}
+% --- SCHRIFTART & FARBEN ---
+\setsansfont{Lato} % Lade die Schriftart "Lato" einfach nach Namen
+\renewcommand{\familydefault}{\sfdefault}
 
  \definecolor{primarycolor}{HTML}{5B9BD5}
  \definecolor{graytext}{HTML}{595959}
