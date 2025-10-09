@@ -1,9 +1,6 @@
-# STUFE 1: WÄHLEN SIE EIN ROBUSTES, DEBIAN-BASIERTES BASIS-IMAGE MIT JAVA 21
+# Ihre vorgeschlagene Lösung
 FROM eclipse-temurin:21-jdk-jammy
 
-# STUFE 2: INSTALLIEREN SIE EINE MINIMALE TeX Live DISTRIBUTION MIT APT
-# apt-get ist der Paketmanager für Debian/Ubuntu.
-# --no-install-recommends sorgt für eine schlankere Installation.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     texlive-xetex \
@@ -11,16 +8,15 @@ RUN apt-get update && \
     texlive-lang-german \
  && rm -rf /var/lib/apt/lists/*
 
-# STUFE 3: KOPIEREN SIE DIE QUARKUS-ANWENDUNG (Standard-Struktur)
-# Da wir nicht mehr das Red Hat Image verwenden, kehren wir zur Standard-Struktur zurück.
-WORKDIR /work/
-COPY --chown=1001:0 target/quarkus-app/lib/* /work/lib/
-COPY --chown=1001:0 target/quarkus-app/*.jar /work/
-COPY --chown=1001:0 target/quarkus-app/app/* /work/app/
-COPY --chown=1001:0 target/quarkus-app/quarkus/* /work/quarkus/
+WORKDIR /deployments/  # GEÄNDERT von /work/
+# Alle Pfade hier auf /deployments/ geändert
+COPY --chown=1001:0 target/quarkus-app/lib/* /deployments/lib/
+COPY --chown=1001:0 target/quarkus-app/*.jar /deployments/
+COPY --chown=1001:0 target/quarkus-app/app/* /deployments/app/
+COPY --chown=1001:0 target/quarkus-app/quarkus/* /deployments/quarkus/
 
 EXPOSE 8080
 USER 1001
 
-# STUFE 4: STARTEN SIE DIE ANWENDUNG MIT DEM STANDARD-JAVA-BEFEHL
-CMD ["java", "-jar", "/work/quarkus-run.jar"]
+# Startbefehl ebenfalls geändert
+CMD ["java", "-jar", "/deployments/quarkus-run.jar"]
