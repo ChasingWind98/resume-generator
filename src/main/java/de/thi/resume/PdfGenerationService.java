@@ -211,8 +211,8 @@ public class PdfGenerationService {
      */
     private boolean executeLatexCommand(Path texFile, Path tempDir) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "xelatex",
-                "-interaction=nonstopmode", // Stoppt nicht bei kleinen Fehlern
+                "pdflatex", // <--- GEÄNDERT VON "xelatex"
+                "-interaction=nonstopmode",
                 "-output-directory=" + tempDir.toAbsolutePath(),
                 texFile.toAbsolutePath().toString()
         );
